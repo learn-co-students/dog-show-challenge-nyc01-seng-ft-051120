@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchDogs = () => {
         fetch(baseUrl)
         .then(r => r.json())
-        .then(dogs => getDogs(dogs))
+        .then(dogs => renderDogs(dogs))
     }
     
    
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     
-    const getDogs = (dogs) => {
+    const renderDogs = (dogs) => {
         dogs.forEach(dog => {
             let tableRow = document.createElement("tr")
             tableRow.dataset.id = `${dog.id}`
@@ -31,12 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    const clickHandler = () => {
+
         document.addEventListener("click", e => {
             if (e.target.textContent === "Edit"){
-                console.log(e.target);
                 let dog = e.target
                 let dogId = e.target.id
+                
              
                 let tRow = dog.closest("tr")
            
@@ -48,8 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dogForm.name.value = name
                 dogForm.breed.value = breed
                 dogForm.sex.value = sex
-                // we now have access to the button which then gives access to the dog information
-                // we can fill the form with the values from the current dog using the closest method for the closest row
+   
                 document.addEventListener("submit", e => {
                     e.preventDefault()
                     let newName = dogForm.name.value
@@ -66,25 +65,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             sex: newSex
                         })
                     })
-                    .then(fetchDogs(baseUrl))
-                })
-                
-                // once we populate the form, add event listener for a submit and patch the dogs
-        
-                
+                    .then(r => r.json())
+                    .then(dog => {
+                        let updatedDog = document.querySelector(`tr[data-id="${dog.id}"]`)
+                        updatedDog.children[0].innerText = dog.name
+                        updatedDog.children[1].innerText = dog.breed
+                        updatedDog.children[2].innerText = dog.sex
+                    })
+                   
+                   
+                })   
+                            
             }
-
+         
+        fetchDogs()
         })
-    }
 
-    const submitHandler = () => {
-        
-    }
 
-    // const patchDogs = (dogId) => {
-        
-    // }
-submitHandler()  
-clickHandler()   
+ 
 fetchDogs()
 })
