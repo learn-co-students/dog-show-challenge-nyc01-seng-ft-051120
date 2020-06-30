@@ -16,13 +16,13 @@
       "id": 3,
       "name": "Snickers",
       "breed": "Dachshund",
-      "sex": "female"
+      "sex": "male"
     },
     {
       "id": 4,
       "name": "Harvey",
       "breed": "Irish Spaniel",
-      "sex": "man"
+      "sex": "she"
     },
     {
       "id": 5,
@@ -34,7 +34,7 @@
       "id": 6,
       "name": "Oreo",
       "breed": "English Springer",
-      "sex": "male"
+      "sex": "malelalallalla"
     },
     {
       "id": 7,
@@ -46,7 +46,7 @@
       "id": 8,
       "name": "Chloe",
       "breed": "Dandie Terrier",
-      "sex": "male"
+      "sex": "maleeeeeeee"
     },
     {
       "id": 9,
@@ -82,7 +82,7 @@
       "id": 14,
       "name": "Coco",
       "breed": "Maltese",
-      "sex": "female"
+      "sex": "Male "
     },
     {
       "id": 15,

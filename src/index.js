@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
+//had issues clearing the form and figuring out how to make the name editable. 
     
     fetch("http://localhost:3000/dogs")
     .then(response => response.json())
@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" name="sex" placeholder="dog's sex" value="${tableBody.rows[newId].cells[2].innerText}" />
             <input type="submit" value="Submit" />
           `
-        //√get the input from the table row
-        //√autopopulate it into the form
         }
 
      })
@@ -39,11 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
      document.addEventListener('click', function(e){
         e.preventDefault()
+        
         if(e.target.value === "Submit"){
-           console.log('hooray')
-
            let tableBody = document.querySelector('#table-body') 
- 
            let dogForm = document.getElementById('dog-form')
 
            let formObj = {
@@ -61,8 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
                body: JSON.stringify(formObj)
            })
              .then(response => response.json())
-             .then(console.log)
-
+             .then(data => {
+                let id = data.id
+                let newId = id - 1
+                let tableBody = document.querySelector('#table-body') 
+                let updateRow = tableBody.rows[newId]             
+               
+                updateRow.innerHTML = `
+                <td>${data.name}</td> <td>${data.breed}</td> <td>${data.sex}</td> <td><button id="${data.id}">Edit Dog</button></td>
+                `
+                // tableBody.append(updateRow)
+             })
         }
      })
 
