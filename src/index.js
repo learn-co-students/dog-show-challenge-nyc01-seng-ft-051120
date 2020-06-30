@@ -44,7 +44,6 @@ const form = document.getElementById("dog-form")
     })
 
 
-
     function patchDog(url, dogWithChanges){
         fetch(url, {
             method: "PATCH",
@@ -64,6 +63,11 @@ const form = document.getElementById("dog-form")
 
     form.addEventListener("submit", function(e){
         e.preventDefault()
+
+        if (form.dataset.id === undefined){
+            alert('Choose a dog to edit')
+        }
+        else {
         const updatedDog = {
             name: e.target.name.value,
             breed: e.target.breed.value,
@@ -71,7 +75,9 @@ const form = document.getElementById("dog-form")
         }
         thatDogId = form.dataset.id
         patchDog(`http://localhost:3000/dogs/${thatDogId}`, updatedDog)
-        // form.reset() !!!removed because caused dog that was just updated to be updated again with no values if hit submit
-    })
+        form.removeAttribute('data-id')
+        form.reset() 
+        }
+})
 
 })
