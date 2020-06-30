@@ -25,37 +25,38 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(resp => resp.json())
         .then(dogsData => rederDogs(dogsData))  //forgot what goes in here
     }
-    fetchDogs(http://localhost:3000/dogs);
-
+    fetchDogs("http://localhost:3000/dogs");
+    
     function editDog(){
-        const buttonContainer = document.getElementsByTagName(tr) //grab parent for edit button since every row has an edit button
-        buttonContainer.addEventListener("click", function(e){
+        const doggoForm = document.getElementById("dog-form") 
+        doggoForm.addEventListener("submit", function(e){
             e.preventDefault();
-            const editBtn = buttonContainer.children[3]     //grabs fourth tr 
-            if(editBtn.innerText === "Edit Dog"){       //unsure how to proceed here
-
-            }
+            //update dog info somehow - create variable?
         })
-    },
-
-    function fetchEdit(url, dog){
-        fetch(url, dog {
-            method:"POST", 
-            headers: {
-                'Content-type': 'application/json`,
-                //reponse you accept in return :'application/json`
-
-            },
-            body: JSON.stringify(dog),
-        })
-        .then(resp => resp.json());
-        .then(json => dog)
     }
 
+    function fetchEdit(url, dogObj){
+        fetch(url, dog {
+            method:"PATCH", 
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
 
-   
+            },
+            body: JSON.stringify({
+                "dog": dogObj       
+        })
+        .then(resp => resp.json())
+        .then(dog => editedDog)   
+        })
 
-
+        const newDogObj = {           //this syntax is wrong but I know I need to return the user input from the form to update the changes
+            name: newDogObj[name],
+            breed:newDogObj[breed],
+            sex:newDogObj[sex]
+        }
+        //also need id of dog being changed since we are editing a specific dog
+    }
 
 })
 
@@ -72,3 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //when you edit you need to get the form somehow.....? in fetch?
 //add event listener for submit on form - prevent deault on event 
 //for patch request an id will be needed
+
+
+//edit part 2 - to edit isolate form
+//add patch to form
