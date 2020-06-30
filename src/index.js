@@ -38,7 +38,7 @@ const editDogs = () => {
 
 const submitDogs = () => {
   form.addEventListener('submit', e => {
-    e.preventDefault()
+    e.preventDefault()                                          
     const dogObj = {
       'name': form.name.value,
       'breed': form.breed.value,
@@ -52,10 +52,13 @@ const submitDogs = () => {
       }
     })
     .then(r => r.json())
-    .then(table.remove())
-    .then(fetchDogs())
+    .then(data => {
+      console.log(data)
+      table.innerHTML = ""
+      fetchDogs()
+    })
   })
-  // fetchDogs()
+  
 }
 
 fetchDogs()
