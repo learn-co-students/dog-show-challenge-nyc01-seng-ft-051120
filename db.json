@@ -14,9 +14,9 @@
     },
     {
       "id": 3,
-      "name": "",
-      "breed": "",
-      "sex": ""
+      "name": "Ant",
+      "breed": "Human kinda",
+      "sex": "Male"
     },
     {
       "id": 4,
@@ -51,7 +51,7 @@
     {
       "id": 9,
       "name": "Shelby",
-      "breed": "Kuvasz",
+      "breed": "Kuvas",
       "sex": "male"
     },
     {
