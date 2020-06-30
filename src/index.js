@@ -23,6 +23,7 @@ document.addEventListener('click',function(e){
    formBody.sex.value = json.sex
   formBody.dataset.id = json.id}
    document.addEventListener('submit',function(e){
+     e.preventDefault()
      let form = e.target
      fetch(`http://localhost:3000/dogs/${e.target.dataset.id}`, {
       method: 'PATCH',
@@ -33,13 +34,8 @@ document.addEventListener('click',function(e){
         }),
         headers: {
           "Content-type": "application/json"
-          }
-     })
+          }})
      form.reset()
-   })
- 
-}})
-
-
+   })}})
 fetchDogs()
 })

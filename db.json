@@ -9,14 +9,14 @@
     {
       "id": 2,
       "name": "Cocoa",
-      "breed": "weiner",
+      "breed": "weiner/beagle",
       "sex": "Female"
     },
     {
       "id": 3,
-      "name": "Cocoa",
-      "breed": "Dachshund",
-      "sex": "female"
+      "name": "",
+      "breed": "",
+      "sex": ""
     },
     {
       "id": 4,
