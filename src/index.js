@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const dogSex = dogSexTd.textContent
             editFormBase.dataset.dogid = dogId
             editFormBase.innerHTML = `
-                                    <input type="text" name="name" placeholder="${dogName}" value="" />
-                                    <input type="text" name="breed" placeholder="${dogBreed}" value="" />
-                                    <input type="text" name="sex" placeholder="${dogSex}" value="" />
+                                    <input type="text" name="name" placeholder="dog's name" value="${dogName}" />
+                                    <input type="text" name="breed" placeholder="dog's breed" value="${dogBreed}" />
+                                    <input type="text" name="sex" placeholder="dog's sex" value="${dogSex}" />
                                     <input type="submit" value="Submit" />
                                     `
         }

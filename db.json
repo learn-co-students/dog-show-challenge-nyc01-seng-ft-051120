@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Baby",
       "breed": "Scottish",
-      "sex": "male"
+      "sex": "female"
     },
     {
       "id": 2,
@@ -27,7 +27,7 @@
     {
       "id": 5,
       "name": "Gracie",
-      "breed": "Miniature Pinscher",
+      "breed": "Miniature Pin",
       "sex": "female"
     },
     {
