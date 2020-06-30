@@ -22,27 +22,28 @@ function renderDogs(dogs) {
 }
 
 function displayDogInfo(tableRow) {
-  const formInputs = Array.from(form.children).splice(0,3);
-  const rowContents = Array.from(tableRow.children).splice(0, 3)
-  formInputs.forEach((form, i) => {
-    form.value = rowContents[i].innerText
-  })
-  form.dataset.currentDog = tableRow.dataset.dogId
+  const formInputs = Array.from(form.children).slice(0,3);
+  const rowContents = Array.from(tableRow.children).slice(0, 3);
+
+  console.log(rowContents);
+  
+  form.dataset.currentDog = tableRow.dataset.dogId;
+  for(const i in formInputs) {
+    formInputs[i].value = rowContents[i].innerText;
+  }
 }
 
 function submitDog() {
   let dogObject = { id: form.dataset.currentDog };
-  const inputs = Array.from(form.children);
-
-  inputs.splice(0,3).forEach(input => {
-    dogObject[input.name] = input.value
-  })
+  const formInputs = Array.from(form.children).slice(0,3);
+  for (const i in formInputs) {
+    dogObject[formInputs[i].name] = formInputs[i].value;
+  }
   editDog(dogObject)
 }
 
-editDog = async (dog) => {
-  await fetch(
-    `http://localhost:3000/dogs/${dog.id}`,
+editDog = async dog => {
+  await fetch( `http://localhost:3000/dogs/${dog.id}`,
     {
       method: "PATCH",
       headers: {
@@ -62,7 +63,7 @@ editDog = async (dog) => {
 
 tableBody.addEventListener('click', e => {
   if (e.target.tagName == "BUTTON") {
-    const tableRow = e.target.parentElement.parentElement;;
+    const tableRow = e.target.parentElement.parentElement;
     displayDogInfo(tableRow)
   }
 });
