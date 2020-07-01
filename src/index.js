@@ -1,81 +1,87 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // 1.On page load, render a list of already
-  //registered dogs in the table. You can fetch these dogs from localhost
-  // 2.The dog should be put on the table as a table row.
-  function fetchDogs(url) {
-    fetch(url)
-      .then(function (res) {
-        return res.json();
-      })
-      .then(function (dogs) {
-        const table = document.querySelector("#table-body");
-        for (let i = 0; i < dogs.length; i++) {
-          const addTr = document.createElement("tr");
-          addTr.id = dogs[i].id;
-          addTr.innerHTML = `<td>${dogs[i].name}</td> 
-            <td>${dogs[i].breed}</td> <td>${dogs[i].sex}</td> 
-            <td><button class="edit">Edit</button></td>`;
-          table.append(addTr);
-        }
-      });
-  }
-  // 3. Make a dog editable. Clicking on the edit button next to a dog should
-  //populate the top form with that dog's current information.
-  //grab edit button and add listener
-  // send it to "edit" form
-  // add listener to "submit"
-  // update changes do DB
-  function clickHandler() {
-    const buttons = document.querySelector("body > div");
-    buttons.addEventListener("click", function (e) {
-      if (e.target.matches(".edit")) {
-        let td = e.target.parentNode;
-        let name = td.parentNode.firstChild.innerText;
-        let breed = td.parentNode.firstChild.nextElementSibling.innerHTML;
-        let sex =
-          td.parentNode.firstChild.nextElementSibling.nextElementSibling
-            .innerHTML;
-        let editForm = document.querySelector("#dog-form");
-        editForm.innerHTML = `
-    <input type="text" name="name" placeholder="${name}" value="${name}" />
-    <input type="text" name="breed" placeholder="${breed}" value="${breed}" />
-    <input type="text" name="sex" placeholder="${sex}" value="${sex}" />
-    <input type="submit" value="Submit" />`;
-        console.log(editForm.innerHTML);
-      } else if (e.target.value === "Submit") {
-        // 4. On submit of the form, a PATCH request should be made to
-        // http://localhost:3000/dogs/:id to update the dog information
-        //(including name, breed and sex attributes).
-        //
-        e.preventDefault();
-        const subButton = e.target;
-        let dogSex = subButton.previousElementSibling.value;
-        let dogBreed =
-          subButton.previousElementSibling.previousElementSibling.value;
-        let dogName =
-          subButton.previousElementSibling.previousElementSibling
-            .previousElementSibling.value;
-        console.log(subButton.dogName);
+document.addEventListener('DOMContentLoaded', () => {
+  //when the page loads, fetch the dogs
+  fetchDoges()
 
-        fetch("http://localhost:3000/dogs/:id", {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name: dogName,
-            breed: dogBreed,
-            sex: dogSex,
-          })
-        })
-        .then(r => r.json())
-        .then(newDog => { 
-        })
+  //define our dog form and slap an event listener on it
+  let dogForm = document.querySelector('#dog-form')
+  dogForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    editDog(event.target)
+  })
+})
+
+// function fetchDoges(){
+//   fetch('http://localhost:3000/dogs')
+//   .then(resp => resp.json())
+//   .then(dogs => renderDogs(dogs))
+// }
+
+// function renderDogs(dogs){
+//   const table = document.getElementById('table-body')
+//   dogs.forEach(dog => {
+//     let row = document.createElement('tr')
+//     /// if you need unique identifiers on your HTML elements but you don't have them, add 'em!
+//     row.id = dog.id
+//     row.innerHTML = ` 
+//                     <td name="name">${dog.name}</td>
+//                     <td name="breed">${dog.breed}</td>
+//                     <td name="sex">${dog.sex}</td>
+//                     <td>
+//                       <button class="dog-btn" data-id="${dog.id}">Edit</button>
+//                     </td>
+//                     `
+//     table.append(row)
+//   })
+
+  // find all the dog buttons and mutate the node list that querySelectorAll returns to us into an array...
+  const dogBtns = Array.from(document.querySelectorAll(".dog-btn"))
+  /// and slap an event listener on each of them
+  dogBtns.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+      if (event.target.dataset.id === btn.dataset.id){
+        populateForm(btn.dataset.id)
       }
-    });
+    })
+  })
+}
+
+function populateForm(id){
+  /// use the id we're sending to find our whole dog element so we can populate the form values
+  let dogForm = document.querySelector('#dog-form')
+  
+  let dog = document.getElementById(`${id}`)
+  let name = dog.children['name'].innerText
+  let breed = dog.children['breed'].innerText
+  let sex = dog.children['sex'].innerText
+  
+  dogForm.children['name'].value = name
+  dogForm.children['breed'].value = breed
+  dogForm.children['sex'].value = sex
+  dogForm.dataset.id = id
+}
+
+function editDog(dog){
+  let id = dog.dataset.id
+  /// defining a dog object to send to our patch request
+  let dogObject = {
+    id: id,
+    name: dog.name.value,
+    breed: dog.breed.value,
+    sex: dog.sex.value
   }
 
-  fetchDogs("http://localhost:3000/dogs");
-  clickHandler();
-});
+  fetch(`http://localhost:3000/dogs/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accepts': 'application/json'
+    }, 
+    body: JSON.stringify(dogObject)
+  })
+
+  //optimistique rendering! this is happening *independent* of the patch
+  let currentDog = document.getElementById(id)
+  currentDog.children.name.textContent = dogObject.name
+  currentDog.children.breed.textContent = dogObject.breed
+  currentDog.children.sex.textContent = dogObject.sex
+}
