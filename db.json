@@ -2,9 +2,9 @@
   "dogs": [
     {
       "id": 1,
-      "name": "Sunny",
-      "breed": "Jindo",
-      "sex": "male"
+      "name": "Snoopy",
+      "breed": "Poodle",
+      "sex": "female"
     },
     {
       "id": 2,
